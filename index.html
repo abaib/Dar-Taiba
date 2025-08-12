@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dar Taiba - Integrated Investment Prospectus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Tajawal', sans-serif;
+            background-color: #f8fafc;
+        }
+        .lang-ar { display: none; }
+        html[dir="rtl"] .lang-en { display: none; }
+        html[dir="rtl"] .lang-ar { display: inline; }
+        .tab {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .tab.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .chart-bar { transition: height 0.5s ease-in-out; }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border-left-color: #3b82f6;
+            animation: spin 1s ease infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        input[type=range] {
+            -webkit-appearance: none; appearance: none;
+            background: transparent; cursor: pointer; width: 100%;
+        }
+        input[type=range]:focus { outline: none; }
+        input[type=range]::-webkit-slider-runnable-track {
+            background: #e2e8f0; height: 0.25rem; border-radius: 0.25rem;
+        }
+        input[type=range]::-moz-range-track {
+            background: #e2e8f0; height: 0.25rem; border-radius: 0.25rem;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none; margin-top: -6px;
+            background-color: #3b82f6; height: 1.25rem; width: 1.25rem;
+            border-radius: 50%; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        input[type=range]::-moz-range-thumb {
+            border: none; border-radius: 50%; background-color: #3b82f6;
+            height: 1.25rem; width: 1.25rem; border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-r from-blue-900 via-purple-900 to-blue-800 text-white">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="relative container mx-auto px-6 py-20">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="mb-6">
+                    <span class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium mb-4 bg-white/20 text-white border-white/30">
+                        <span class="lang-en">Investment Opportunity</span><span class="lang-ar">فرصة استثمارية</span>
+                    </span>
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">Dar Taiba</h1>
+                    <p class="text-xl md:text-2xl text-blue-100 mb-8">
+                        <span class="lang-en">Leading the Future of Luxury Furniture in Saudi Arabia</span>
+                        <span class="lang-ar">قيادة مستقبل الأثاث الفاخر في المملكة العربية السعودية</span>
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="flex flex-col gap-6 rounded-xl border py-6 shadow-sm bg-white/10 border-white/20 text-white">
+                        <div class="p-6 text-center">
+                            <div class="text-2xl font-bold">15.7B SAR</div>
+                            <div class="text-sm text-blue-200"><span class="lang-en">Current Market Size</span><span class="lang-ar">حجم السوق الحالي</span></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-6 rounded-xl border py-6 shadow-sm bg-white/10 border-white/20 text-white">
+                        <div class="p-6 text-center">
+                            <div class="text-2xl font-bold">9.5%</div>
+                            <div class="text-sm text-blue-200"><span class="lang-en">Annual Growth Rate</span><span class="lang-ar">معدل النمو السنوي</span></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-6 rounded-xl border py-6 shadow-sm bg-white/10 border-white/20 text-white">
+                        <div class="p-6 text-center">
+                            <div class="text-2xl font-bold">15+</div>
+                            <div class="text-sm text-blue-200"><span class="lang-en">Years of Excellence</span><span class="lang-ar">عامًا من التميز</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center">
+                    <button id="lang-en-btn" class="font-semibold text-white border-b-2 border-white pb-1" onclick="switchLanguage('en')">EN</button>
+                    <span class="mx-3 text-blue-200">/</span>
+                    <button id="lang-ar-btn" class="font-semibold text-blue-200" onclick="switchLanguage('ar')">AR</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container mx-auto px-6 py-12">
+        <!-- Tabs Navigation -->
+        <div class="flex justify-center border-b bg-white rounded-t-lg shadow-sm">
+            <button class="tab active font-semibold p-4" onclick="openTab(event, 'overview')"><span class="lang-en">Market Overview</span><span class="lang-ar">نظرة عامة على السوق</span></button>
+            <button class="tab font-semibold p-4" onclick="openTab(event, 'company')"><span class="lang-en">Company Profile</span><span class="lang-ar">ملف الشركة</span></button>
+            <button class="tab font-semibold p-4" onclick="openTab(event, 'showroom')"><span class="lang-en">Flagship Showroom</span><span class="lang-ar">صالة العرض الرائدة</span></button>
+            <button class="tab font-semibold p-4" onclick="openTab(event, 'financials')"><span class="lang-en">Financials & AI Tools</span><span class="lang-ar">البيانات المالية وأدوات الذكاء الاصطناعي</span></button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="bg-white p-6 md:p-8 rounded-b-lg shadow-sm">
+            <!-- Market Overview Tab -->
+            <div id="overview" class="tab-content active space-y-8">
+                <section>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800"><span class="lang-en">Saudi Arabia Furniture Market Growth</span><span class="lang-ar">نمو سوق الأثاث في المملكة العربية السعودية</span></h3>
+                    <div class="bg-slate-50 p-4 rounded-lg border h-[400px]">
+                        <!-- Chart will be rendered here by Recharts -->
+                        <div id="market-chart-container"></div>
+                    </div>
+                </section>
+                <section>
+                     <h3 class="text-2xl font-bold mb-4 text-gray-800"><span class="lang-en">Key Market Drivers</span><span class="lang-ar">محركات السوق الرئيسية</span></h3>
+                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                         <div class="p-4 bg-slate-50 rounded-lg border"><h4 class="font-bold text-blue-600"><span class="lang-en">Vision 2030</span><span class="lang-ar">رؤية 2030</span></h4><p class="text-sm text-gray-600"><span class="lang-en">Economic diversification and giga-projects.</span><span class="lang-ar">التنويع الاقتصادي والمشاريع العملاقة.</span></p></div>
+                         <div class="p-4 bg-slate-50 rounded-lg border"><h4 class="font-bold text-blue-600"><span class="lang-en">Urbanization</span><span class="lang-ar">التوسع الحضري</span></h4><p class="text-sm text-gray-600"><span class="lang-en">Rapid city growth and new residential projects.</span><span class="lang-ar">نمو المدن السريع والمشاريع السكنية الجديدة.</span></p></div>
+                         <div class="p-4 bg-slate-50 rounded-lg border"><h4 class="font-bold text-blue-600"><span class="lang-en">Rising Income</span><span class="lang-ar">ارتفاع الدخل</span></h4><p class="text-sm text-gray-600"><span class="lang-en">Increased purchasing power for quality furniture.</span><span class="lang-ar">زيادة القوة الشرائية للأثاث عالي الجودة.</span></p></div>
+                         <div class="p-4 bg-slate-50 rounded-lg border"><h4 class="font-bold text-blue-600"><span class="lang-en">Tourism Growth</span><span class="lang-ar">نمو السياحة</span></h4><p class="text-sm text-gray-600"><span class="lang-en">Expansion of hotels and hospitality sector.</span><span class="lang-ar">توسع قطاع الفنادق والضيافة.</span></p></div>
+                     </div>
+                </section>
+            </div>
+
+            <!-- Company Profile Tab -->
+            <div id="company" class="tab-content space-y-8">
+                 <section>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800"><span class="lang-en">About Dar Taiba</span><span class="lang-ar">عن دار طيبة</span></h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="text-lg font-semibold mb-2"><span class="lang-en">Our Mission</span><span class="lang-ar">مهمتنا</span></h4>
+                            <p class="text-gray-600"><span class="lang-en">To provide integrated solutions that meet global specifications in the furniture market, combining innovation with quality craftsmanship to deliver exceptional comfort and luxury.</span><span class="lang-ar">توفير حلول متكاملة تلبي المواصفات العالمية في سوق الأثاث، مع الجمع بين الابتكار والحرفية عالية الجودة لتقديم راحة وفخامة استثنائية.</span></p>
+                        </div>
+                        <div>
+                             <h4 class="text-lg font-semibold mb-2"><span class="lang-en">Our Vision</span><span class="lang-ar">رؤيتنا</span></h4>
+                            <p class="text-gray-600"><span class="lang-en">To maintain our position among the leading furniture manufacturing companies in the Kingdom and globally, through continuous development and innovation.</span><span class="lang-ar">الحفاظ على مكانتنا بين شركات تصنيع الأثاث الرائدة في المملكة والعالم، من خلال التطوير والابتكار المستمر.</span></p>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800"><span class="lang-en">Product Portfolio</span><span class="lang-ar">مجموعة منتجاتنا</span></h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded"><span class="lang-en">Residential Furniture</span><span class="lang-ar">أثاث سكني</span></span>
+                        <span class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded"><span class="lang-en">Office Furniture</span><span class="lang-ar">أثاث مكتبي</span></span>
+                        <span class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded"><span class="lang-en">Hotel Furniture</span><span class="lang-ar">أثاث فندقي</span></span>
+                        <span class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded"><span class="lang-en">Kitchen Solutions</span><span class="lang-ar">حلول المطابخ</span></span>
+                        <span class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded"><span class="lang-en">Wooden Doors</span><span class="lang-ar">أبواب خشبية</span></span>
+                        <span class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded"><span class="lang-en">Custom Woodwork</span><span class="lang-ar">أعمال خشبية مخصصة</span></span>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Showroom Tab -->
+            <div id="showroom" class="tab-content space-y-8">
+                <section>
+                     <h3 class="text-2xl font-bold mb-4 text-gray-800"><span class="lang-en">Flagship Showroom Investment</span><span class="lang-ar">الاستثمار في صالة العرض الرائدة</span></h3>
+                     <p class="text-gray-600 mb-6"><span class="lang-en">A premium 750 sq.m showroom in a prime location (Riyadh/Jeddah) to serve as a physical embodiment of the Dar Taiba brand.</span><span class="lang-ar">صالة عرض فاخرة بمساحة 750 مترًا مربعًا في موقع متميز (الرياض/جدة) لتكون تجسيدًا ماديًا لعلامة دار طيبة التجارية.</span></p>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                         <div>
+                             <h4 class="text-lg font-semibold mb-2"><span class="lang-en">Investment Summary</span><span class="lang-ar">ملخص الاستثمار</span></h4>
+                             <div class="space-y-2">
+                                 <div class="flex justify-between p-2 bg-slate-50 rounded-lg"><span><span class="lang-en">Initial Investment</span><span class="lang-ar">الاستثمار المبدئي</span></span> <span class="font-bold text-blue-600">3.8M SAR</span></div>
+                                 <div class="flex justify-between p-2 bg-slate-50 rounded-lg"><span><span class="lang-en">Annual Operating Costs</span><span class="lang-ar">التكاليف التشغيلية السنوية</span></span> <span class="font-bold text-blue-600">2.6M SAR</span></div>
+                                 <div class="flex justify-between p-2 bg-slate-50 rounded-lg"><span><span class="lang-en">Expected ROI</span><span class="lang-ar">العائد المتوقع على الاستثمار</span></span> <span class="font-bold text-blue-600">15-20%</span></div>
+                             </div>
+                         </div>
+                         <div>
+                            <h4 class="text-lg font-semibold mb-2"><span class="lang-en">Detailed Cost Breakdown</span><span class="lang-ar">تفصيل التكاليف</span></h4>
+                            <div class="text-sm text-gray-600">
+                                <p><strong><span class="lang-en">Initial Setup:</span><span class="lang-ar">التأسيس المبدئي:</span></strong> 45,000 SAR</p>
+                                <p><strong><span class="lang-en">Annual Rent:</span><span class="lang-ar">الإيجار السنوي:</span></strong> 1,250,000 SAR</p>
+                                <p><strong><span class="lang-en">Interior Design:</span><span class="lang-ar">التصميم الداخلي:</span></strong> 1,500,000 SAR</p>
+                                <p><strong><span class="lang-en">Furniture & Display:</span><span class="lang-ar">الأثاث والعرض:</span></strong> 1,000,000 SAR</p>
+                                <p><strong><span class="lang-en">Technology:</span><span class="lang-ar">التقنية:</span></strong> 200,000 SAR</p>
+                                <p><strong><span class="lang-en">Marketing Launch:</span><span class="lang-ar">حملة الإطلاق:</span></strong> 175,000 SAR</p>
+                                <p><strong><span class="lang-en">Annual Staffing:</span><span class="lang-ar">تكاليف الموظفين السنوية:</span></strong> 1,150,000 SAR</p>
+                                <p><strong><span class="lang-en">Operations:</span><span class="lang-ar">التشغيل:</span></strong> 225,000 SAR</p>
+                            </div>
+                         </div>
+                     </div>
+                </section>
+            </div>
+
+            <!-- Financials & AI Tab -->
+            <div id="financials" class="tab-content space-y-8">
+                 <section>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800"><span class="lang-en">Interactive Financial Model</span><span class="lang-ar">النموذج المالي التفاعلي</span></h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <label for="market-growth" class="font-semibold flex justify-between"><span class="lang-en">Market Growth</span><span class="lang-ar">نمو السوق</span> <span id="market-growth-value" class="font-bold text-blue-600">9.5%</span></label>
+                                <input type="range" id="market-growth" min="5" max="15" value="9.5" step="0.5" oninput="updateProjections()">
+                            </div>
+                            <div>
+                                <label for="b2b-win-rate" class="font-semibold flex justify-between"><span class="lang-en">B2B Win Rate / Year</span><span class="lang-ar">معدل الفوز بعقود B2B / سنة</span> <span id="b2b-win-rate-value" class="font-bold text-blue-600">3</span></label>
+                                <input type="range" id="b2b-win-rate" min="1" max="6" value="3" step="1" oninput="updateProjections()">
+                            </div>
+                            <div>
+                                <label for="showroom-conversion" class="font-semibold flex justify-between"><span class="lang-en">Showroom Conversion</span><span class="lang-ar">معدل تحويل صالة العرض</span> <span id="showroom-conversion-value" class="font-bold text-blue-600">5%</span></label>
+                                <input type="range" id="showroom-conversion" min="2" max="10" value="5" step="0.5" oninput="updateProjections()">
+                            </div>
+                        </div>
+                        <div class="flex justify-around items-end h-64 bg-slate-50 p-4 rounded-lg border">
+                            <div class="text-center"><p id="rev-2025" class="font-bold text-lg text-gray-800 mb-1">13.1M</p><div class="chart-bar bg-blue-500 w-16 rounded-t-md" style="height: 50%;"></div><p class="mt-2 font-semibold text-sm text-slate-500">2025</p></div>
+                            <div class="text-center"><p id="rev-2026" class="font-bold text-lg text-gray-800 mb-1">21.7M</p><div class="chart-bar bg-blue-500 w-16 rounded-t-md" style="height: 75%;"></div><p class="mt-2 font-semibold text-sm text-slate-500">2026</p></div>
+                            <div class="text-center"><p id="rev-2027" class="font-bold text-lg text-gray-800 mb-1">30.7M</p><div class="chart-bar bg-blue-500 w-16 rounded-t-md" style="height: 100%;"></div><p class="mt-2 font-semibold text-sm text-slate-500">2027</p></div>
+                        </div>
+                    </div>
+                </section>
+                 <section>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800"><span class="lang-en">Investment Ask</span><span class="lang-ar">الاستثمار المطلوب</span></h3>
+                     <div class="bg-blue-900 text-white p-6 rounded-xl shadow-lg">
+                        <p class="text-center text-5xl font-bold mb-4">8.5M <span class="text-3xl font-medium lang-ar">ريال</span><span class="text-3xl font-medium lang-en">SAR</span></p>
+                        <h3 class="font-bold text-lg mb-2 text-blue-300"><span class="lang-en">Use of Funds</span><span class="lang-ar">أوجه الصرف</span></h3>
+                        <div class="space-y-3 text-slate-200">
+                            <div class="flex justify-between items-center"><span class="lang-en">Flagship Showroom</span><span class="lang-ar">صالة العرض الرائدة</span><span class="font-semibold">45%</span></div>
+                            <div class="w-full bg-blue-700 rounded-full h-2"><div class="bg-blue-300 h-2 rounded-full" style="width: 45%"></div></div>
+                            <div class="flex justify-between items-center"><span class="lang-en">Digital Transformation</span><span class="lang-ar">التحول الرقمي</span><span class="font-semibold">25%</span></div>
+                            <div class="w-full bg-blue-700 rounded-full h-2"><div class="bg-blue-300 h-2 rounded-full" style="width: 25%"></div></div>
+                            <div class="flex justify-between items-center"><span class="lang-en">B2B Sales Expansion</span><span class="lang-ar">توسيع مبيعات B2B</span><span class="font-semibold">20%</span></div>
+                            <div class="w-full bg-blue-700 rounded-full h-2"><div class="bg-blue-300 h-2 rounded-full" style="width: 20%"></div></div>
+                            <div class="flex justify-between items-center"><span class="lang-en">Working Capital</span><span class="lang-ar">رأس المال العامل</span><span class="font-semibold">10%</span></div>
+                            <div class="w-full bg-blue-700 rounded-full h-2"><div class="bg-blue-300 h-2 rounded-full" style="width: 10%"></div></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
+
+    <script>
+        function switchLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.getElementById('lang-en-btn').classList.toggle('border-b-2', lang === 'en');
+            document.getElementById('lang-en-btn').classList.toggle('text-white', lang === 'en');
+            document.getElementById('lang-en-btn').classList.toggle('text-blue-200', lang === 'ar');
+            document.getElementById('lang-ar-btn').classList.toggle('border-b-2', lang === 'ar');
+            document.getElementById('lang-ar-btn').classList.toggle('text-white', lang === 'ar');
+            document.getElementById('lang-ar-btn').classList.toggle('text-blue-200', lang === 'en');
+            renderMarketChart();
+        }
+
+        function openTab(event, tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function updateProjections() {
+            const marketGrowth = parseFloat(document.getElementById('market-growth').value);
+            const b2bWinRate = parseInt(document.getElementById('b2b-win-rate').value);
+            const showroomConversion = parseFloat(document.getElementById('showroom-conversion').value);
+
+            document.getElementById('market-growth-value').textContent = `${marketGrowth.toFixed(1)}%`;
+            document.getElementById('b2b-win-rate-value').textContent = `${b2bWinRate}`;
+            document.getElementById('showroom-conversion-value').textContent = `${showroomConversion.toFixed(1)}%`;
+
+            const base2025 = 8.5 + (b2bWinRate * 1.9) + (showroomConversion * 0.1);
+            const rev2025 = base2025;
+            const rev2026 = rev2025 * (1 + marketGrowth / 100) * 1.1;
+            const rev2027 = rev2026 * (1 + marketGrowth / 100) * 1.15;
+
+            document.getElementById('rev-2025').textContent = `${rev2025.toFixed(1)}M`;
+            document.getElementById('rev-2026').textContent = `${rev2026.toFixed(1)}M`;
+            document.getElementById('rev-2027').textContent = `${rev2027.toFixed(1)}M`;
+            
+            const maxRev = Math.max(rev2025, rev2026, rev2027, 1);
+            document.querySelector('#rev-2025 + .chart-bar').style.height = `${(rev2025 / maxRev) * 100}%`;
+            document.querySelector('#rev-2026 + .chart-bar').style.height = `${(rev2026 / maxRev) * 100}%`;
+            document.querySelector('#rev-2027 + .chart-bar').style.height = `${(rev2027 / maxRev) * 100}%`;
+        }
+
+        // --- Recharts Integration ---
+        let marketChartRoot = null;
+        function renderMarketChart() {
+            try {
+                const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } = Recharts;
+                const lang = document.documentElement.lang;
+                
+                const tooltipFormatter = (value) => [`${value} ${lang === 'en' ? 'B SAR' : 'مليار ريال'}`, lang === 'en' ? 'Market Size' : 'حجم السوق'];
+                const tooltipLabelFormatter = (label) => `${lang === 'en' ? 'Year' : 'سنة'}: ${label}`;
+
+                const marketData = [
+                    { year: '2024', value: 24.38 }, { year: '2025', value: 26.45 },
+                    { year: '2026', value: 28.72 }, { year: '2027', value: 31.21 },
+                    { year: '2028', value: 33.94 }, { year: '2029', value: 36.93 },
+                    { year: '2030', value: 40.20 }
+                ];
+
+                const MarketChart = () => React.createElement(ResponsiveContainer, { width: '100%', height: '100%' },
+                    React.createElement(LineChart, { data: marketData, margin: { top: 5, right: 20, left: -10, bottom: 5 } },
+                        React.createElement(CartesianGrid, { strokeDasharray: '3 3' }),
+                        React.createElement(XAxis, { dataKey: 'year' }),
+                        React.createElement(YAxis, {}),
+                        React.createElement(Tooltip, { 
+                            formatter: tooltipFormatter, 
+                            labelFormatter: tooltipLabelFormatter 
+                        }),
+                        React.createElement(Line, { 
+                            type: 'monotone', 
+                            dataKey: 'value', 
+                            stroke: '#3B82F6', 
+                            strokeWidth: 3, 
+                            dot: { fill: '#3B82F6', r: 5 } 
+                        })
+                    )
+                );
+                
+                const container = document.getElementById('market-chart-container');
+                if (container) {
+                    // Clear previous chart if it exists
+                    if (marketChartRoot) {
+                        marketChartRoot.unmount();
+                    }
+                    marketChartRoot = ReactDOM.createRoot(container);
+                    marketChartRoot.render(React.createElement(MarketChart));
+                }
+            } catch (error) {
+                console.error("Error rendering chart:", error);
+                const container = document.getElementById('market-chart-container');
+                if (container) {
+                    container.innerHTML = `<p class="text-red-500 text-center p-4">${
+                        document.documentElement.lang === 'en' 
+                            ? 'Could not load chart. Please try again later.' 
+                            : 'تعذر تحميل الرسم البياني. يرجى المحاولة مرة أخرى لاحقًا.'
+                    }</p>`;
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            switchLanguage('en');
+            updateProjections();
+            renderMarketChart();
+        });
+    </script>
+</body>
+</html>
